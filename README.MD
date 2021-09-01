@@ -36,7 +36,7 @@ PARTITION BY RANGE (TO_DAYS(hiredate) ) (
 执行脚本：
 
 ```shell
-python3 -H 127.0.0.1 -P 3306 -d my_database -u my_username -p my_password -r 3 -a 3 -b daily -t my_table
+python3 range_by_time.py -H 127.0.0.1 -P 3306 -d my_database -u my_username -p my_password -r 3 -a 3 -b daily -t my_table
 ```
 
 * -H : MYSQL 数据库服务ip地址
@@ -48,12 +48,13 @@ python3 -H 127.0.0.1 -P 3306 -d my_database -u my_username -p my_password -r 3 -
 * -b : 分区单位（按月/按日）
 * -r : 需要删除的分区表数量
 * -a : 需要添加的分区表数量
+* -f : 时间转换函数 TO_DAYS/TIMESTAMP
 
 ### 示例
 
 如今天是2020-10-15日，下面这个命令将会删除3天前的分区p20201012（2020-10-12以前的数据），同时添加后3天的分区p20201016、p20201017、p20201018。
 
-    python3 -h 127.0.0.1 -P 3306 -d my_database -u my_username -p my_password -r 3 -a 3 -b daily -t my_table
+    python3 range_by_time.py -H 127.0.0.1 -P 3306 -d my_database -u my_username -p my_password -r 3 -a 3 -b daily -t my_table
 
 ### 添加到定时任务
 
@@ -64,7 +65,7 @@ crontab -e
 ```
 2. 每天10点执行脚本
 
-    00 10 * * * 脚本路径/venv/bin/python 脚本路径/range_datetime.py -H 127.0.0.1 -d database -u username -p password -r 3 -a 3 -b daily -t table >> 脚本路径/partition.log
+    00 10 * * * 脚本路径/venv/bin/python 脚本路径/range_by_time.py -H 127.0.0.1 -d database -u username -p password -r 3 -a 3 -b daily -t table >> 脚本路径/partition.log
 
 定时任务说明
 
