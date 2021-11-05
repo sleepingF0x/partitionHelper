@@ -44,9 +44,10 @@ def main(options):
                 if partition['PARTITION_NAME'] <= remove_partition:
                     remove_partitions.append(partition['PARTITION_NAME'])
         for i in range(options.addPart):
-            part_name = 'p_' + (datetime.now() + relativedelta(months=i + 1, hour=0, minute=0, second=0)).strftime(
-                "%Y%m%d")
-            time_lt = (datetime.now() + relativedelta(months=i + 2, hour=0, minute=0, second=0)).strftime("%Y-%m-%d")
+            part_name = 'p_' + (datetime.now() + relativedelta(months=i + 1, day=1, hour=0, minute=0, second=0)).\
+                strftime("%Y%m")
+            time_lt = (datetime.now() + relativedelta(months=i + 2, day=1, hour=0, minute=0, second=0)).\
+                strftime("%Y-%m-%d")
             add_partitions.append((part_name, time_lt))
     else:
         return
